@@ -12,5 +12,11 @@ var APILIST = {
   user_getInfo: BASEURL + "/admin/getuser",
 
   // 文章类型相关接口
+  // 获取文章类型
   category_get: BASEURL + "/admin/category_search",
+  // 添加文章类别
+  category_add: BASEURL + "/admin/category_add",
+  // 删除文章类别
+  category_del: BASEURL + "/admin/category_delete",
+
 }
