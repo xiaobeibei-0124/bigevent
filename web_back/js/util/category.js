@@ -17,5 +17,13 @@ var category = {
       "id": id
     })
   },
+  // 编辑
+  edit: function(id, name, slug) {
+    return $.post(APILIST.category_edit, {
+      "id": id,
+      "name": name,
+      "slug": slug
+    })
+  },
 
 }
