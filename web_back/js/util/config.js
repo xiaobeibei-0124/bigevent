@@ -21,4 +21,7 @@ var APILIST = {
   // 编辑文章类别
   category_edit: BASEURL + "/admin/category_edit",
 
+  // 文章相关的接口
+  // 获取文章
+  article_get: BASEURL + "/admin/search",
 }
