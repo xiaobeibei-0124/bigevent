@@ -21,5 +21,15 @@ var article = {
       processData: false, //不允许修改数据
       contentType: false, //不予许设置请求头
     })
+  },
+  // 添加
+  edit: function(fd) {
+    return $.ajax({
+      url: APILIST.article_edit,
+      type: "post",
+      data: fd,
+      processData: false, //不允许修改数据
+      contentType: false, //不予许设置请求头
+    })
   }
 }
