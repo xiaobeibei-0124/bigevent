@@ -8,4 +8,14 @@ var article = {
   del: function(id) {
     return $.get(APILIST.article_del, { "id": id })
   },
+  // 添加
+  add: function(fd) {
+    return $.ajax({
+      url: APILIST.article_add,
+      type: "post",
+      data: fd,
+      processData: false, //不允许修改数据
+      contentType: false, //不予许设置请求头
+    })
+  }
 }
