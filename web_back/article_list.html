@@ -123,7 +123,7 @@
       <td class="text-center">{{item.state}}</td>
       <td class="text-center">
         <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-        <a href="javascript:deleteTr( 1005 );" class="btn btn-danger btn-xs">删除</a>
+        <a href="javascript:;" data-id={{item.id}} class="btn btn-danger btn-xs del">删除</a>
       </td>
     </tr>
     {{/each}}
@@ -192,6 +192,26 @@
       curStatus = $("#selStatus").val()
         //   console.log(type, status);
       getAndShow();
+    })
+
+
+    // 4.文章删除
+    // 给父容器添加事假委托，实现删除
+    // 获取id，调用接口，根据反馈做后续
+    $("#tbody").on("click", ".del", function() {
+      if (!confirm("你确定要删除吗？")) {
+        return
+      }
+      var id = $(this).attr("data-id")
+      article.del(id).then(function(res) {
+        if (res.code === 200) {
+          getAndShow()
+        } else {
+          alert(res.msg)
+        }
+      })
+
+
     })
   </script>
 

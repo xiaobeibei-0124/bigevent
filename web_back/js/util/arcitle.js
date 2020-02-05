@@ -4,4 +4,8 @@ var article = {
   get: function(page, type, status) {
     return $.get(APILIST.article_get, { "page": page, "type": type, "state": status })
   },
+  // 删除
+  del: function(id) {
+    return $.get(APILIST.article_del, { "id": id })
+  },
 }
