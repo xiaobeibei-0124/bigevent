@@ -123,14 +123,12 @@
     <div class="right_con">
       <div class="common_wrap">
         <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-        <ul class="content_list">
-          <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
+        <ul class="content_list" id="rank">
+          <!-- <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
           <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
           <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>4</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>5</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>6</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>7</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+          <li><span>4</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li> -->
+
         </ul>
       </div>
       <div class="common_wrap">
@@ -225,6 +223,20 @@
     {{/each}}
 </script>
 
+<!-- 热门排行模板引擎 -->
+<script id="temp_rank" type="text/html">
+  {{each data item idx}} {{if idx==0}}
+  <li><span class="first">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  {{else if idx==1}}
+  <li><span class="second">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  {{else if idx==2}}
+  <li><span class="third">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  {{else}}
+  <li><span>{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  {{/if}} {{/each}}
+
+</script>
+
 <script>
   // 获取文章类型列表
   category.get().then(function(res) {
@@ -240,6 +252,17 @@
     if (res.code === 200) {
       var htmlStr = template("temp_focus", res)
       $("#focus").html(htmlStr)
+    } else {
+      alert(res.msg)
+    }
+  })
+
+  // 文章热门排行
+  article.getRank().then(function(res) {
+    // console.log(res);
+    if (res.code === 200) {
+      var htmlStr = template("temp_rank", res)
+      $("#rank").html(htmlStr)
     } else {
       alert(res.msg)
     }
