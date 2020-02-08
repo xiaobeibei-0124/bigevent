@@ -12,6 +12,6 @@ var APILIST = {
 
   // 文章相关的接口
   // 获取文章
-  article_get: BASEURL + "/admin/search",
+  article_get: BASEURL + "/search",
 
 }

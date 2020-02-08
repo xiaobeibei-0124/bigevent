@@ -46,27 +46,12 @@
 
   <div class="main_con clearfix">
     <div class="left_con">
-      <ul class="focus_list">
-        <li class="first">
+      <ul class="focus_list" id="focus">
+        <!-- <li class="first">
           <a href="#"><img src="images/pic01.jpg" alt=""></a>
           <p>图片说明</p>
-        </li>
-        <li>
-          <a href="#"><img src="images/pic02.jpg" alt=""></a>
-          <p>图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明</p>
-        </li>
-        <li>
-          <a href="#"><img src="images/pic03.jpg" alt=""></a>
-          <p>图片说明</p>
-        </li>
-        <li>
-          <a href="#"><img src="images/pic05.jpg" alt=""></a>
-          <p>图片说明</p>
-        </li>
-        <li>
-          <a href="#"><img src="images/pic06.jpg" alt=""></a>
-          <p>图片说明</p>
-        </li>
+        </li> -->
+
       </ul>
 
       <div class="common_title">
@@ -223,8 +208,21 @@
 <!-- 定义文章类型的模板引擎 -->
 <script id="temp" type="text/html">
   {{each data item}}
-  <li><a href="#">{{item.name}}</a></li>
+  <li><a href="list.html">{{item.name}}</a></li>
   {{/each}}
+</script>
+
+<!-- 焦点图模板引擎 -->
+<script id="temp_focus" type="text/html">
+  {{each data item idx}} {{if idx == 0}}
+  <li class="first">
+    {{else}}
+    <li>
+      {{/if}}
+      <a href="#"><img src="{{item.cover}}" alt=""></a>
+      <p>{{item.title}}</p>
+    </li>
+    {{/each}}
 </script>
 
 <script>
@@ -234,6 +232,18 @@
     var htmlStr = template("temp", res)
     $("#left_menu").html(htmlStr)
     $("#level_two_menu").append(htmlStr)
+  })
+
+  //   焦点图
+  article.getFocusFive().then(function(res) {
+    // console.log(res)
+    if (res.code === 200) {
+      var htmlStr = template("temp_focus", res)
+      $("#focus").html(htmlStr)
+    } else {
+      alert(res.msg)
+    }
+
   })
 </script>
 
