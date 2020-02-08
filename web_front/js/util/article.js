@@ -6,5 +6,7 @@ var article = {
   getById: (id) => $.get(APILIST.article_get, { id }),
   // 获取文章热门排行
   getRank: (type) => $.get(APILIST.article_rank, { type }),
+  // 获取最新资讯
+  getLastest: () => $.get(APILIST.article_lastest),
 
 }
