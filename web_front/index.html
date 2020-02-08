@@ -209,7 +209,7 @@
 <!-- 定义文章类型的模板引擎 -->
 <script id="temp" type="text/html">
   {{each data item}}
-  <li><a href="list.html">{{item.name}}</a></li>
+  <li><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
   {{/each}}
 </script>
 
@@ -229,13 +229,13 @@
 <!-- 热门排行模板引擎 -->
 <script id="temp_rank" type="text/html">
   {{each data item idx}} {{if idx==0}}
-  <li><span class="first">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  <li><span class="first">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
   {{else if idx==1}}
-  <li><span class="second">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  <li><span class="second">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
   {{else if idx==2}}
-  <li><span class="third">{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  <li><span class="third">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
   {{else}}
-  <li><span>{{idx+1}}</span><a href="article.html">{{item.title}}</a></li>
+  <li><span>{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
   {{/if}} {{/each}}
 </script>
 
