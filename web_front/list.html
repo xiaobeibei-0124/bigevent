@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>大事件-列表页</title>
   <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/jquery.pagination.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -50,36 +51,20 @@
       </div>
 
       <div id="last">
-
+        <!-- 用来存储文章列表 -->
       </div>
 
 
+      <!-- 用来分页 -->
+      <ul id="pagination" class="pagination-sm"></ul>
 
-      <div id="pagination" class="page"></div>
-      <script>
-        $(function() {
-          $("#pagination").pagination({
-            currentPage: 2,
-            totalPage: 8,
-            callback: function(current) {
-              alert('ok!');
-            }
-          });
-        });
-      </script>
 
     </div>
     <div class="right_con setfl">
       <div class="common_wrap">
         <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-        <ul class="content_list">
-          <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
-          <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>4</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>5</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>6</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-          <li><span>7</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+        <ul class="content_list" id="rank">
+
         </ul>
       </div>
       <div class="common_wrap">
@@ -148,6 +133,7 @@
 
 </body>
 <script src="./js/jquery-1.12.4.min.js"></script>
+<script src="./js/jquery.twbsPagination.js"></script>
 <script src="./js/template-web.js"></script>
 <script src="./js/util/config.js"></script>
 <script src="./js/util/category.js"></script>
@@ -178,12 +164,25 @@
   {{/each}}
 </script>
 
+<!-- 热门排行 -->
+<script id="temp_rank" type="text/html">
+  {{each data item idx}} {{if idx==0}}
+  <li><span class="first">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
+  {{else if idx==1}}
+  <li><span class="second">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
+  {{else if idx==2}}
+  <li><span class="third">{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
+  {{else}}
+  <li><span>{{idx+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
+  {{/if}} {{/each}}
+</script>
+
 <script>
   // 获取文章的id
   var id = window.location.search.substr(4)
 
   // 高亮显示所选标题
-  category.get().then(function(res) {
+  category.get().then((res) => {
     // console.log(res);
     res.curId = id;
     var htmlStr = template("temp", res)
@@ -193,12 +192,46 @@
 
   //   列表页详细信息
   var curPage = 1
-  article.getList(id, curPage).then(function(res) {
-    var htmlStr = template("temp_last", res)
-    console.log(htmlStr);
-    $("#last").html(htmlStr)
+  getAndShow();
 
+  function getAndShow() {
+    article.getList(id, curPage).then((res) => {
+      var htmlStr = template("temp_last", res)
+      console.log(htmlStr);
+      $("#last").html(htmlStr)
+        //   分页
+        // 优化：小于一页不分页
+      if (res.pages <= 1) {
+        return
+      }
+      $('#pagination').twbsPagination({
+        // 插件初始时，不要触发第一次click事件
+        initiateStartPageClick: false,
+
+        totalPages: res.pages, // 总页数
+        visiblePages: 6, // 可见页数
+        first: '首页',
+        prev: '上一页',
+        next: '下一页',
+        last: '尾页',
+        onPageClick: (event, page) => {
+          curPage = page
+          getAndShow();
+        }
+      });
+    })
+  }
+
+  // 显示热门排行
+  article.getRank(id).then((res) => {
+    if (res.code === 200) {
+      var htmlStr = template("temp_rank", res)
+      $("#rank").html(htmlStr)
+    } else {
+      alert(res.msg)
+    }
   })
 </script>
+
 
 </html>
