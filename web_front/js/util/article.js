@@ -8,5 +8,7 @@ var article = {
   getRank: (type) => $.get(APILIST.article_rank, { type }),
   // 获取最新资讯
   getLastest: () => $.get(APILIST.article_lastest),
+  // 列表页详细信息
+  getList: (type, page) => $.get(APILIST.article_get, { type, page })
 
 }
