@@ -190,7 +190,7 @@
     $("#level_two_menu").append(htmlStr)
 
     //列表页标题
-    res.data.forEach(function(item) {
+    res.data.forEach((item) => {
       if (item.id == id) {
         $("#cateName").html(item.name)
       }

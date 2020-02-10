@@ -1,19 +1,13 @@
 // 把所有与文章相关的操作写在这里
 var article = {
   // 获取
-  get: function(page, type, status) {
-    return $.get(APILIST.article_get, { "page": page, "type": type, "state": status })
-  },
+  get: (page, type, status) => $.get(APILIST.article_get, { page, type, "state": status }),
   // 根据id获取文章详情
-  getById: function(id) {
-    return $.get(APILIST.article_get, { "id": id })
-  },
+  getById: (id) => $.get(APILIST.article_get, { id }),
   // 删除
-  del: function(id) {
-    return $.get(APILIST.article_del, { "id": id })
-  },
+  del: (id) => $.get(APILIST.article_del, { id }),
   // 添加
-  add: function(fd) {
+  add: (fd) => {
     return $.ajax({
       url: APILIST.article_add,
       type: "post",
@@ -23,7 +17,7 @@ var article = {
     })
   },
   // 添加
-  edit: function(fd) {
+  edit: (fd) => {
     return $.ajax({
       url: APILIST.article_edit,
       type: "post",

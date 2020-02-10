@@ -157,7 +157,7 @@
     getAndShow()
 
     function getAndShow() {
-      category.get().then(function(res) {
+      category.get().then((res) => {
         // 用模板引擎来  渲染数据
         // 4.调用template函数，为模板分配数据，获得渲染
         var htmlStr = template("tmp_cate", res)
@@ -171,7 +171,7 @@
     // 用到了bootstrap的模态框
     // 会在页面是弹出一个对话框
     // 点击添加按钮
-    $("#model_add").click(function() {
+    $("#model_add").click(() => {
         // （1）收集用户信息，简单判断
         var name = $("#name").val().trim()
         var slug = $("#slug").val().trim()
@@ -181,7 +181,7 @@
         }
         // console.log(name, slug);
         // （2）发请求，根据反馈，做后续操作
-        category.add(name, slug).then(function(res) {
+        category.add(name, slug).then((res) => {
           // console.log(res);
           if (res.code == 200) {
             // 添加成功
@@ -200,7 +200,7 @@
 
       })
       // 点击关闭按钮，隐藏模态框
-    $("#model_shutoff").click(function() {
+    $("#model_shutoff").click(() => {
       $('#addModal').modal('hide')
     })
 
@@ -210,7 +210,7 @@
       // （1）获取id 再生成按钮时，要先设置自定义属性id 
       var id = $(this).attr("data-id")
         // （2）请求接口，根据反馈做后续操作
-      category.del(id).then(function(res) {
+      category.del(id).then((res) => {
         if (res.code === 200) {
           getAndShow()
         } else {
@@ -236,7 +236,7 @@
         $('#editModal').modal('show');
       })
       // （2）用户修改，点击保存，发请求，做后续操作
-    $("#model_save").click(function() {
+    $("#model_save").click(() => {
       var id = $("#edit_id").val().trim()
       var new_name = $("#edit_name").val().trim()
       var new_slug = $("#edit_slug").val().trim()
@@ -245,7 +245,7 @@
         return
       }
       // console.log(id, new_name, new_slug);
-      category.edit(id, new_name, new_slug).then(function(res) {
+      category.edit(id, new_name, new_slug).then((res) => {
         if (res.code === 200) {
           // 编辑成功
           // 隐藏模态框

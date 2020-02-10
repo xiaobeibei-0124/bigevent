@@ -257,7 +257,7 @@
 
 <script>
   // 获取文章类型列表
-  category.get().then(function(res) {
+  category.get().then((res) => {
     // console.log(res);
     var htmlStr = template("temp", res)
     $("#left_menu").html(htmlStr)
@@ -265,7 +265,7 @@
   })
 
   //   焦点图
-  article.getFocusFive().then(function(res) {
+  article.getFocusFive().then((res) => {
     // console.log(res)
     if (res.code === 200) {
       var htmlStr = template("temp_focus", res)
@@ -276,7 +276,7 @@
   })
 
   // 文章热门排行
-  article.getRank().then(function(res) {
+  article.getRank().then((res) => {
     // console.log(res);
     if (res.code === 200) {
       var htmlStr = template("temp_rank", res)
@@ -287,7 +287,7 @@
   })
 
   // 最新资讯
-  article.getLastest().then(function(res) {
+  article.getLastest().then((res) => {
     console.log(res);
     if (res.code === 200) {
       var htmlStr = template("temp_last", res)
