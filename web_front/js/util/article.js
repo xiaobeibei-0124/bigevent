@@ -9,6 +9,8 @@ var article = {
   // 获取最新资讯
   getLastest: () => $.get(APILIST.article_lastest),
   // 列表页详细信息
-  getList: (type, page) => $.get(APILIST.article_get, { type, page })
+  getList: (type, page) => $.get(APILIST.article_get, { type, page }),
+  // 获取文章详情页
+  getDetail: (id) => $.get(APILIST.article_detail, { id })
 
 }

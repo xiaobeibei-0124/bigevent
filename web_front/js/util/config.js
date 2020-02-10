@@ -20,4 +20,9 @@ const APILIST = {
   // 获取最新资讯
   article_lastest: BASEURL + "/lastest",
 
+  // 获取文章详情
+  article_detail: BASEURL + "/article",
+
+  // 添加评论
+  comment_add: BASEURL + "/post_comment",
 }
