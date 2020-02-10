@@ -25,4 +25,7 @@ const APILIST = {
 
   // 添加评论
   comment_add: BASEURL + "/post_comment",
+
+  // 显示评论
+  comment_get: BASEURL + "/get_comments",
 }

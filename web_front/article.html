@@ -83,39 +83,12 @@
           <input type="button" name="" value="评 论" class="comment_sub" id="btn"></div>
       </form>
 
-      <div class="comment_count">
+      <div class="comment_count" id="com_num">
         4条评论
       </div>
 
-      <div class="comment_list_con">
-        <div class="comment_detail_list">
-          <div class="person_pic fl">乔</div>
-          <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-          <div class="comment_text fl">
-            遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-          </div>
-        </div>
-        <div class="comment_detail_list">
-          <div class="person_pic fl">段</div>
-          <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-          <div class="comment_text fl">
-            遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-          </div>
-        </div>
-        <div class="comment_detail_list">
-          <div class="person_pic fl">虚</div>
-          <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-          <div class="comment_text fl">
-            遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-          </div>
-        </div>
-        <div class="comment_detail_list">
-          <div class="person_pic fl">王</div>
-          <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-          <div class="comment_text fl">
-            遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-          </div>
-        </div>
+      <div class="comment_list_con" id="com">
+        <!-- 评论 -->
       </div>
     </div>
     <div class="right_con setfl">
@@ -197,9 +170,24 @@
 
 </body>
 <script src="./js/jquery-1.12.4.min.js"></script>
+<script src="./js/template-web.js"></script>
 <script src="./js/util/config.js"></script>
 <script src="./js/util/article.js"></script>
 <script src="./js/util/comment.js"></script>
+
+<!-- 显示评论模板引擎 -->
+<script id="temp_comment" type="text/html">
+  {{each data item}}
+  <div class="comment_detail_list">
+    <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+    <div class="name_time fl"><b>{{item.name}}</b><span>{{item.dt}}</span></div>
+    <div class="comment_text fl">
+      {{item.content}}
+    </div>
+  </div>
+  {{/each}}
+</script>
+
 <script>
   var id = window.location.search.substr(4)
     //   调用方法
@@ -231,7 +219,7 @@
       alert(res.msg)
     }
   })
-
+  getConmment();
   //   发表评论
   $("#btn").click(function() {
     var name = $("#comment_name").val().trim()
@@ -250,6 +238,18 @@
 
     })
   })
+
+  function getConmment() {
+    comment.get(id).then(function(res) {
+      console.log(res);
+      if (res.code === 200) {
+        var htmlStr = template("temp_comment", res)
+        $("#com").html(htmlStr)
+        $("#com_num").text(res.data.length + "条评论")
+      }
+
+    })
+  }
 </script>
 
 </html>
