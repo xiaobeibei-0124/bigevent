@@ -170,6 +170,9 @@
 
 </body>
 <script src="./js/jquery-1.12.4.min.js"></script>
+<script src="../js库/dayjs/dayjs.min.js"></script>
+<script src="../js库/dayjs/relative.min.js"></script>
+<script src="../js库/dayjs/zh_cn.js"></script>
 <script src="./js/template-web.js"></script>
 <script src="./js/util/config.js"></script>
 <script src="./js/util/article.js"></script>
@@ -180,7 +183,7 @@
   {{each data item}}
   <div class="comment_detail_list">
     <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
-    <div class="name_time fl"><b>{{item.name}}</b><span>{{item.dt}}</span></div>
+    <div class="name_time fl"><b>{{item.name}}</b><span>{{item.relativeTime}}</span></div>
     <div class="comment_text fl">
       {{item.content}}
     </div>
@@ -189,6 +192,11 @@
 </script>
 
 <script>
+  //   使用dayjs优化时间戳
+  dayjs.locale('zh-cn'); // 全局设置，中文
+  // 使用插件
+  dayjs.extend(dayjs_plugin_relativeTime);
+  // 获取文章id
   var id = window.location.search.substr(4)
     //   调用方法
   article.getDetail(id).then(function(res) {
@@ -220,6 +228,7 @@
     }
   })
   getConmment();
+
   //   发表评论
   $("#btn").click(function() {
     var name = $("#comment_name").val().trim()
@@ -235,7 +244,7 @@
       $("#comment_name").val("")
       $("#comment_content").val("")
         // 显示评论
-
+      getConmment()
     })
   })
 
@@ -243,12 +252,20 @@
     comment.get(id).then(function(res) {
       console.log(res);
       if (res.code === 200) {
+        res.data.forEach(function(item) {
+          item.relativeTime = dayjs(item.dt).fromNow()
+        })
         var htmlStr = template("temp_comment", res)
         $("#com").html(htmlStr)
         $("#com_num").text(res.data.length + "条评论")
       }
 
     })
+  }
+
+  //   优化时间戳
+  function getRelatvetime(dt) {
+    return dayjs(dt).fromNow();
   }
 </script>
 
