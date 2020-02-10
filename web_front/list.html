@@ -47,7 +47,7 @@
     <div class="left_con setfr">
 
       <div class="list_title">
-        <h3>科 技</h3>
+        <h3 id="cateName"></h3>
       </div>
 
       <div id="last">
@@ -188,6 +188,13 @@
     var htmlStr = template("temp", res)
     $("#left_menu").html(htmlStr)
     $("#level_two_menu").append(htmlStr)
+
+    //列表页标题
+    res.data.forEach(function(item) {
+      if (item.id == id) {
+        $("#cateName").html(item.name)
+      }
+    })
   })
 
   //   列表页详细信息
